@@ -1,0 +1,55 @@
+﻿@model PizzaFormModel
+
+@{
+    ViewData["Title"] = "Crea nuova pizza";
+}
+
+<h2>Crea nuova pizza</h2>
+
+<form asp-action="Create" method="post" asp-controller="Pizza">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="Pizza.Nome">Nome:</label>
+        <input asp-for="Pizza.Nome" class="form-control" />
+        <span asp-validation-for="Pizza.Nome" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Pizza.Descrizione">Descrizione:</label>
+        <textarea asp-for="Pizza.Descrizione" class="form-control"></textarea>
+        <span asp-validation-for="Pizza.Descrizione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Pizza.Prezzo">Prezzo:</label>
+        <input type="number" step="0.5" asp-for="Pizza.Prezzo" class="form-control" />
+        <span asp-validation-for="Pizza.Prezzo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Pizza.CategoryId">Categoria:</label>
+        <select asp-for="Pizza.CategoryId" class="form-control">
+            <option value="" selected disabled>Seleziona una categoria</option>
+            @if (Model.Categories != null)
+            {
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="Pizza.CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SelectedIngredients">Ingredienti:</label>
+        <select asp-for="SelectedIngredients" multiple="multiple" class="form-control" asp-items="@Model.Ingredients">
+        </select>
+        <span asp-validation-for="SelectedIngredients" class="text-danger"></span>
+    </div>
+
+    <div class="text-center my-3">
+        <button type="submit" class="btn btn-primary">Crea</button>
+    </div>
+</form>
+

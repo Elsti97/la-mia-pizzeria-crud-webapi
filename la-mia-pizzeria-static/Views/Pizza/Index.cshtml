@@ -1,0 +1,69 @@
+﻿@using System.Globalization;
+@model Pizza[]
+
+@{
+    ViewData["Title"] = "Le Pizze";
+    var pizzas = Model;
+}
+
+<h2 class="text-center">Le nostre Pizze</h2>
+@if (User.IsInRole("Admin"))
+{
+    <div class="text-center">
+        <button type="button" class="btn btn-primary mx-auto my-2" onclick="location.href='@Url.Action("Create", "Pizza")'">Aggiungi Pizza</button>
+    </div>
+}
+
+
+@if (pizzas.Length is 0)
+{
+    <p>Nessuna Pizza</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrizione</th>
+                <th>Prezzo</th>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Modifica</th>
+                    <th>Elimina</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pizza in pizzas)
+            {
+                <tr>
+
+                    <td class="name">
+                        <a href="@Url.Action("Detail", "Pizza", new { Id = pizza.Id })">@pizza.Nome</a>
+                    </td>
+                    <td>@pizza.Descrizione</td>
+                    <td>@pizza.Prezzo €</td>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <button type="button" class="btn btn-warning mx-auto m-2" onclick="location.href='@Url.Action("Update", "Pizza", new { id = pizza.Id })'">Modifica</button>
+                        </td>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <form asp-action="Delete" asp-controller="Pizza" asp-route-id="@pizza.Id">
+                                @Html.AntiForgeryToken()
+                                <button class="btn btn-danger m-2" type="submit">Elimina</button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}

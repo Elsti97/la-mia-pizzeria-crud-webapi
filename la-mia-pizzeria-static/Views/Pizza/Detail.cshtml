@@ -1,0 +1,52 @@
+﻿@model Pizza
+
+@{
+    ViewData["Title"] = "Pizza " + Model.Nome;
+}
+
+<h2 class="text-center">@Model.Nome</h2>
+
+<table>
+    <tbody>
+        <tr>
+            <th>ID</th>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <th>Nome</th>
+            <td>@Model.Nome</td>
+        </tr>
+        <tr>
+            <th>Descrizione</th>
+            <td>@Model.Descrizione</td>
+        </tr>
+        <tr>
+            <th>Prezzo</th>
+            <td>@Model.Prezzo €</td>
+        </tr>
+        <tr>
+            <th>Categoria</th>
+            <td>
+                @if (Model.Category != null)
+                {
+                    @Model.Category.Name
+                }
+                else
+                {
+                    <span>Nessuna Categoria</span>
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>Ingredienti</th>
+            <td>
+                @foreach (Ingredient ingredient in Model.Ingredients ?? Enumerable.Empty<Ingredient>())
+                {
+                    <div>
+                        <label>@ingredient.Name</label>
+                    </div>
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>
