@@ -32,6 +32,16 @@ namespace la_mia_pizzeria_static.Controllers
 
         }
 
+        public IActionResult ApiIndex()
+        {
+            return View();
+        }
+
+        public IActionResult ApiCreate()
+        {
+            return View();
+        }
+
         public IActionResult Detail(int id)
         {
             var pizza = _context.Pizzas.Include(p => p.Ingredients).Include(p => p.Category).DefaultIfEmpty().SingleOrDefault(p => p.Id == id);

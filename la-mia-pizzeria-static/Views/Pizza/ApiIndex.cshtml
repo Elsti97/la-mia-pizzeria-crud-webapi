@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Le Pizze";
+}
+
+<h2 class="text-center">Le nostre Pizze</h2>
+@if (User.IsInRole("Admin"))
+{
+    <div class="text-center">
+        <button type="button" class="btn btn-primary mx-auto my-2" onclick="location.href='@Url.Action("ApiCreate", "Pizza")'">Aggiungi Pizza</button>
+    </div>
+}
+
+
+
+
+    <div class="text-center" id="pizzas-filter">
+        <div class="form-field">
+            <label class="d-block mb-3">Cerca per nome:</label>
+            <input class="mb-3" placeholder="Cerca" />
+        </div>
+    </div>
+
+    <h3 class="text-center" id="no-pizzas">Nessuna Pizza</h3>
+
+    <p id="pizzas-loader">Loading...</p>
+
+    <table id="pizzas-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Descrizione</th>
+                <th>Prezzo</th>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    @*<th>Modifica</th>*@
+                    @*<th>Elimina</th>*@
+                }
+            </tr>
+        </thead>
+        <tbody id="pizzas"></tbody>
+    </table>
+
+@section Scripts
+    {
+    <script>
+        loadPizzas();
+        initFilter();
+    </script>
+}
